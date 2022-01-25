@@ -93,6 +93,8 @@ class GpsDatum(Node):
                 else:
                     self.get_logger().info('Datum set in robot_localization')
                     self.rl_datum_set_ = True
+                    # TODO: Look into resetting the filters once a GPS fix is available
+                    # and we have set the datum in navsat transform
 
 
 def main(args=None):
