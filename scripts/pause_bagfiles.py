@@ -1,6 +1,4 @@
-# from https://github.com/ros2/rosbag2/pull/729
-# install getkey with `pip install getkey`
-# #!/usr/bin/env python3
+#!/usr/bin/env python3
 import threading
 
 from getkey import getkey, keys
@@ -15,13 +13,18 @@ from rosbag2_interfaces.srv import (
     IsPaused,
 )
 
+
 class PlayController(Node):
     def __init__(self):
         super().__init__('playcontrol')
         self.pause_client = self.create_client(Pause, '/rosbag2_player/pause')
         self.resume_client = self.create_client(Resume, '/rosbag2_player/resume')
-        self.toggle_client = self.create_client(TogglePaused, '/rosbag2_player/toggle_paused')
-        self.is_paused_client = self.create_client(IsPaused, '/rosbag2_player/is_paused')
+        self.toggle_client = self.create_client(
+            TogglePaused, '/rosbag2_player/toggle_paused'
+        )
+        self.is_paused_client = self.create_client(
+            IsPaused, '/rosbag2_player/is_paused'
+        )
         self.timer = self.create_timer(1, self.state_timer)
 
     def print_state(self, future):
@@ -29,7 +32,9 @@ class PlayController(Node):
         if res is not None:
             self.get_logger().info(f'IsPaused: {res.paused}')
         else:
-            self.get_logger().error(f'Exception while calling service: {future.exception()}')
+            self.get_logger().error(
+                f'Exception while calling service: {future.exception()}'
+            )
 
     def trigger_result_cb(self, name):
         def impl(future):
