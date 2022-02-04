@@ -7,14 +7,15 @@ import rclpy
 from rclpy.node import Node
 
 from rosbag2_interfaces.srv import (
+    IsPaused,
     Pause,
     Resume,
-    TogglePaused,
-    IsPaused,
+    TogglePaused
 )
 
 
 class PlayController(Node):
+
     def __init__(self):
         super().__init__('playcontrol')
         self.pause_client = self.create_client(Pause, '/rosbag2_player/pause')
@@ -98,5 +99,5 @@ def main():
     spin_thread.join()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
