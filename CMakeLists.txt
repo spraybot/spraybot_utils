@@ -14,6 +14,7 @@ find_package(ament_cmake REQUIRED)
 install(PROGRAMS
         scripts/vectornav_html_status.py
         scripts/gps_datum.py
+        scripts/pause_bagfiles.py
         DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
