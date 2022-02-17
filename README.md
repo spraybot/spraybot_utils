@@ -1,4 +1,6 @@
 # spraybot_utils
+## Install Requirements
+`pip install -r requirements.txt`
 ## Pause Bagfiles
 ROS2 Galactic does not support pausing bagfiles with spacebar. By running this script in a different window we can achieve the same functionality.
 Copied from https://github.com/ros2/rosbag2/pull/729 
