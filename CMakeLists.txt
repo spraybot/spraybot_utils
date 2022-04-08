@@ -12,6 +12,7 @@ install(PROGRAMS
         scripts/gps_datum.py
         scripts/pause_bagfiles.py
         scripts/waypoint_teleop.py
+        scripts/robot_web_client.py
         DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
