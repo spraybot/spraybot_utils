@@ -11,6 +11,10 @@ from rclpy.qos import (
 
 from sensor_msgs.msg import NavSatFix
 from nav_msgs.msg import Odometry
+from sensor_msgs.msg import Joy
+from diagnostic_msgs.msg import DiagnosticArray
+from std_msgs.msg import Bool
+import numpy as np
 
 
 class RobotWebClient(Node):
@@ -24,20 +28,35 @@ class RobotWebClient(Node):
         self.sub_odom_ = self.create_subscription(
             Odometry, '/odometry/filtered', self.sub_odom_cb, qos_profile_sensor_data
         )
+
+        self.sub_diagnostics_ = self.create_subscription(
+            DiagnosticArray, '/diagnostics', self.sub_diag_cb, qos_profile_sensor_data
+        )
+
+        self.sub_autonomous_mode_ = self.create_subscription(
+            Joy, '/joy_teleop/joy', self.sub_auto_mode_cb, qos_profile_sensor_data
+        )
+
+        self.sub_exit_status_ = self.create_subscription(
+            Bool, '/in_row_flag', self.sub_exit_status_cb, qos_profile_sensor_data
+        )
         
         timer_period_ = 1.0
-        # self.timer_ = self.create_timer(timer_period_, self.timer_callback)
+        self.timer_ = self.create_timer(timer_period_, self.timer_callback)
 
         self.items = {
             'gps': {},
-            'speed': {}
+            'speed': {},
+            'battery': {},
+            'row_exit_status': {},
+            'autonomous_mode': {}
         }
 
     def sub_gps_fix_cb(self, msg):
         self.items['gps'] = {
             'latitude': msg.latitude,
             'longitude': msg.longitude,
-            'altitude': msg.altitude
+            'latitude': msg.altitude
         }
 
     def sub_odom_cb(self, msg):
@@ -45,6 +64,22 @@ class RobotWebClient(Node):
             'linear': msg.twist.twist.linear.x,
             'angular': msg.twist.twist.angular.z
         }
+    
+    def sub_diag_cb(self, msg):
+        for vals in msg.status[0].values:
+            if (vals.key == 'Battery Voltage'):
+                batt_percentage = ( (float(vals.value) - 20) / (28.8 - 20) ) * (100 - 0) + 6
+                self.items['battery'] = batt_percentage
+
+    def sub_exit_status_cb(self,msg):
+        self.items['row_exit_status'] = msg.data
+
+    def sub_auto_mode_cb(self,msg):
+        if ((msg.buttons[4] == 1) or (msg.buttons[5] == 1)):
+            self.items['autonomous_mode'] = False
+        else:
+            self.items['autonomous_mode'] = True
+
 
     def getSpeed(self):
         return str(list(self.items['speed'].values()))
@@ -54,10 +89,7 @@ class RobotWebClient(Node):
 
     def timer_callback(self):
         print(self.items)
-        # print(self.getSpeed())
-        # print(self.getGPS())
-
-
+ 
 def main(args=None):
     rclpy.init(args=args)
 
