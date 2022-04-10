@@ -93,6 +93,12 @@ class RobotWebClient(Node):
     def getBattery(self):
         return str(self.items['battery'])
 
+    def getInRowStat(self):
+        return str(self.items['in_row_status'])
+
+    def getAutoMode(self):
+        return str(self.items['autonomous_mode'])
+
     def timer_callback(self):
         print(self.items)
  

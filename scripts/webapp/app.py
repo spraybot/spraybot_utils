@@ -19,17 +19,6 @@ app.secret_key = 'dev'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
 
-# set default button sytle and size, will be overwritten by macro parameters
-app.config['BOOTSTRAP_BTN_STYLE'] = 'primary'
-app.config['BOOTSTRAP_BTN_SIZE'] = 'sm'
-# app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = 'lumen'  # uncomment this line to test bootswatch theme
-
-# set default icon title of table actions
-app.config['BOOTSTRAP_TABLE_VIEW_TITLE'] = 'Read'
-app.config['BOOTSTRAP_TABLE_EDIT_TITLE'] = 'Update'
-app.config['BOOTSTRAP_TABLE_DELETE_TITLE'] = 'Remove'
-app.config['BOOTSTRAP_TABLE_NEW_TITLE'] = 'Create'
-
 bootstrap = Bootstrap5(app)
 db = SQLAlchemy(app)
 csrf = CSRFProtect(app)
@@ -48,7 +37,7 @@ class RobotStat(db.Model):
     robot_ctrl_mode = db.Column(db.String(50), nullable=False) # 0 manual mode, 1 autonomous mode
     robot_battery = db.Column(db.String(50), nullable=False) # battery percentage
     robot_speed = db.Column(db.String(100), nullable=False) # speed time and location
-    robot_sprayer_on = db.Column(db.String(50), nullable=False) # 0: robot in row, should spray; 1: outside of row, should not spray
+    robot_in_row = db.Column(db.String(50), nullable=False) # 0: robot in row, should spray; 1: outside of row, should not spray
     # robot_location_x = Column(String(50), nullable=False) # robot gps location first coordinate 
     # robot_location_y = Column(String(50), nullable=False) # robot gps location second coordinate
     # robot_task_stat = Column(Integer, nullable=False) # 0 no task, 1 active task, 2 pending task, 3 paused task
@@ -64,7 +53,7 @@ class RobotStat(db.Model):
             'robot_ctrl_mode': self.robot_id,
             'robot_battery': self.robot_battery,
             'robot_speed': self.robot_speed,
-            'robot_sprayer_on': self.robot_sprayer_on,
+            'robot_in_row': self.robot_in_row,
             # 'robot_location': self.robot_location,
             # 'robot_log_time': self.robot_log_time,
         }
@@ -81,7 +70,7 @@ def before_first_request_func():
                     robot_ctrl_mode="xx",
                     robot_battery="xx%",
                     robot_speed="xxxx",
-                    robot_sprayer_on="xxxx"
+                    robot_in_row="xxxx"
                     )
     db.session.add(m)
     db.session.commit()
@@ -102,6 +91,14 @@ def show_robot_status():
     gps = robot_client.getGPS()
     speed = robot_client.getSpeed()
     battery = robot_client.getBattery()
+    in_row_stat = robot_client.getInRowStat()
+    auto_mode_flag = robot_client.getAutoMode()
+    control_mode = ""
+    if auto_mode_flag:
+        control_mode = "Autonomous"
+    else:
+        control_mode = "Tele-op"
+
 
     now = datetime.now()
     dt_string = now.strftime("%H:%M:%S EST %Y/%m/%d")
@@ -111,10 +108,10 @@ def show_robot_status():
                         # robot_stat_time='03:24 EST, 04/01/2022', 
                         robot_stat_time=dt_string, 
                         robot_active=0, 
-                        robot_ctrl_mode="manual",
+                        robot_ctrl_mode=control_mode,
                         robot_battery=battery,
                         robot_speed=speed,
-                        robot_sprayer_on="should be on"
+                        robot_in_row=in_row_stat,
                         )
     db.session.add(m)
     db.session.commit()
