@@ -101,6 +101,7 @@ def show_robot_status():
     # get data from robot client 
     gps = robot_client.getGPS()
     speed = robot_client.getSpeed()
+    battery = robot_client.getBattery()
 
     now = datetime.now()
     dt_string = now.strftime("%H:%M:%S EST %Y/%m/%d")
@@ -111,7 +112,7 @@ def show_robot_status():
                         robot_stat_time=dt_string, 
                         robot_active=0, 
                         robot_ctrl_mode="manual",
-                        robot_battery="89%",
+                        robot_battery=battery,
                         robot_speed=speed,
                         robot_sprayer_on="should be on"
                         )

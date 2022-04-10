@@ -42,7 +42,7 @@ class RobotWebClient(Node):
         )
         
         timer_period_ = 1.0
-        self.timer_ = self.create_timer(timer_period_, self.timer_callback)
+        # self.timer_ = self.create_timer(timer_period_, self.timer_callback)
 
         self.items = {
             'gps': {'latitude': 0,
@@ -89,6 +89,9 @@ class RobotWebClient(Node):
 
     def getGPS(self):
         return str(list(self.items['gps'].values()))
+
+    def getBattery(self):
+        return str(self.items['battery'])
 
     def timer_callback(self):
         print(self.items)
