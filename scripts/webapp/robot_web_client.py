@@ -14,6 +14,7 @@ from nav_msgs.msg import Odometry
 from sensor_msgs.msg import Joy
 from diagnostic_msgs.msg import DiagnosticArray
 from std_msgs.msg import Bool
+from sensor_msgs.msg import Temperature
 import numpy as np
 
 
@@ -40,6 +41,14 @@ class RobotWebClient(Node):
         self.sub_in_row_status_ = self.create_subscription(
             Bool, '/in_row_flag', self.sub_in_row_status_cb, qos_profile_sensor_data
         )
+
+        self.sub_temp_pc_ = self.create_subscription(
+            Temperature, '/temp_data_pc', self.sub_temp_pc_cb, qos_profile_sensor_data
+        )
+
+        self.sub_temp_enclosure_ = self.create_subscription(
+            Temperature, '/temp_data_enclosure', self.sub_temp_enclosure_cb, qos_profile_sensor_data
+        )
         
         timer_period_ = 1.0
         # self.timer_ = self.create_timer(timer_period_, self.timer_callback)
@@ -52,7 +61,9 @@ class RobotWebClient(Node):
             'angular': 0},
             'battery': 0,
             'in_row_status': False,
-            'autonomous_mode': True
+            'autonomous_mode': True,
+            'temperature_pc': 24,
+            'temperature_enclosure': 24
         }
 
     def sub_gps_fix_cb(self, msg):
@@ -83,6 +94,11 @@ class RobotWebClient(Node):
         else:
             self.items['autonomous_mode'] = True
 
+    def sub_temp_pc_cb(self, msg):
+        self.items['temperature_pc'] = msg.temperature
+
+    def sub_temp_enclosure_cb(self, msg):
+        self.items['temperature_enclosure'] = msg.temperature
 
     def getSpeed(self):
         return str(list(self.items['speed'].values()))
@@ -98,6 +114,12 @@ class RobotWebClient(Node):
 
     def getAutoMode(self):
         return str(self.items['autonomous_mode'])
+
+    def getTempPC(self):
+        return str(self.items['temperature_pc'])
+
+    def getTempEnclosure(self):
+        return str(self.items['temperature_enclosure'])
 
     def timer_callback(self):
         print(self.items)
