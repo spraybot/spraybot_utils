@@ -113,7 +113,7 @@ class RobotWebClient(Node):
         return str(self.items['in_row_status'])
 
     def getAutoMode(self):
-        return str(self.items['autonomous_mode'])
+        return self.items['autonomous_mode']
 
     def getTempPC(self):
         return str(self.items['temperature_pc'])

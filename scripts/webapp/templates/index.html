@@ -72,7 +72,7 @@
           </div>
         </div>
         <div class="row d-flex mb-5">
-          <div class="col-10 mx-auto col-sm-6 col-md-6 col-lg-6 col-xl-3">
+          <div class="col-10 mx-auto col-sm-4 col-md-4 col-lg-4 col-xl-4">
             <div class="my-3 card card-body shadow p-4 ">
               <div
                 class="row align-items-center d-flex text-md-center text-lg-start">
@@ -93,7 +93,7 @@
               </div>
             </div>
           </div>
-          <div class="col-10 mx-auto col-sm-6 col-md-6 col-lg-6 col-xl-3">
+          <div class="col-10 mx-auto col-sm-4 col-md-4 col-lg-4 col-xl-4">
             <div class="my-3 card card-body shadow p-4 ">
               <div
                 class="row align-items-center d-flex text-md-center text-lg-start">
@@ -114,7 +114,7 @@
               </div>
             </div>
           </div>
-          <div class="col-10 mx-auto col-sm-6 col-md-6 col-lg-6 col-xl-3">
+          <div class="col-10 mx-auto col-sm-4 col-md-4 col-lg-4 col-xl-4">
             <div class="my-3 card card-body shadow p-4">
               <div class="row align-items-center text-md-center text-lg-start">
                 <div class="col-12 col-sm-3 col-md-3 text-center px-0">
@@ -134,7 +134,7 @@
               </div>
             </div>
           </div>
-          <div class="col-10 mx-auto col-sm-6 col-md-6 col-lg-6 col-xl-3">
+          <div class="col-10 mx-auto col-sm-4 col-md-4 col-lg-4 col-xl-4">
             <div class="my-3 card card-body shadow p-4">
               <div class="row align-items-center text-md-center text-lg-start">
                 <div class="col-12 col-sm-3 col-md-3 text-center px-0">
@@ -149,6 +149,47 @@
                   </h4>
                   <p class="  sm-font-size text-dark-gray mb-0">
                     {{robot.robot_in_row}} 
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-10 mx-auto col-sm-4 col-md-4 col-lg-4 col-xl-4">
+            <div class="my-3 card card-body shadow p-4">
+              <div class="row align-items-center text-md-center text-lg-start">
+                <div class="col-12 col-sm-3 col-md-3 text-center px-0">
+                  <div class="icon-wrap text-primary my-3">
+                    <i
+                      class="icon p-4 border-primary bg-light text-primary md-font-size rounded-circle fa fa-lock fa-lg"></i>
+                  </div>
+                </div>
+                <div class="col-12 col-md-9 mt-3 mt-lg-0">
+                  <h4 class="">
+                    Robot PC Temperature
+                  </h4>
+                  <p class="  mb-0">
+                    {{robot.robot_temp_pc}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-10 mx-auto col-sm-4 col-md-4 col-lg-4 col-xl-4">
+            <!-- <div class="col-10 mx-auto col-sm-6 col-md-6 col-lg-6 col-xl-3"> -->
+            <div class="my-3 card card-body shadow p-4">
+              <div class="row align-items-center text-md-center text-lg-start">
+                <div class="col-12 col-sm-3 col-md-3 text-center px-0">
+                  <div class="icon-wrap text-primary my-3">
+                    <i
+                      class="icon p-4 border-primary bg-light text-primary md-font-size rounded-circle fa fa-lock fa-lg"></i>
+                  </div>
+                </div>
+                <div class="col-12 col-md-9 mt-3 mt-lg-0">
+                  <h4 class="">
+                    Robot Enclosure Temperature
+                  </h4>
+                  <p class="  mb-0">
+                    {{robot.robot_temp_enclosure}}
                   </p>
                 </div>
               </div>

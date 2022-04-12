@@ -38,6 +38,8 @@ class RobotStat(db.Model):
     robot_battery = db.Column(db.String(50), nullable=False) # battery percentage
     robot_speed = db.Column(db.String(100), nullable=False) # speed time and location
     robot_in_row = db.Column(db.String(50), nullable=False) # 0: robot in row, should spray; 1: outside of row, should not spray
+    robot_temp_pc = db.Column(db.String(50), nullable=False) # 0: robot in row, should spray; 1: outside of row, should not spray
+    robot_temp_enclosure = db.Column(db.String(50), nullable=False) # 0: robot in row, should spray; 1: outside of row, should not spray
     # robot_location_x = Column(String(50), nullable=False) # robot gps location first coordinate 
     # robot_location_y = Column(String(50), nullable=False) # robot gps location second coordinate
     # robot_task_stat = Column(Integer, nullable=False) # 0 no task, 1 active task, 2 pending task, 3 paused task
@@ -54,6 +56,8 @@ class RobotStat(db.Model):
             'robot_battery': self.robot_battery,
             'robot_speed': self.robot_speed,
             'robot_in_row': self.robot_in_row,
+            'robot_temp_pc': self.robot_temp_pc,
+            'robot_temp_enclosure': self.robot_temp_enclosure,
             # 'robot_location': self.robot_location,
             # 'robot_log_time': self.robot_log_time,
         }
@@ -70,7 +74,9 @@ def before_first_request_func():
                     robot_ctrl_mode="xx",
                     robot_battery="xx%",
                     robot_speed="xxxx",
-                    robot_in_row="xxxx"
+                    robot_in_row="xxxx",
+                    robot_temp_pc="xxxx",
+                    robot_temp_enclosure="xxxx",
                     )
     db.session.add(m)
     db.session.commit()
@@ -99,6 +105,9 @@ def show_robot_status():
     else:
         control_mode = "Tele-op"
 
+    pc_temp = robot_client.getTempPC()
+    enclosure_temp = robot_client.getTempEnclosure()
+
 
     now = datetime.now()
     dt_string = now.strftime("%H:%M:%S EST %Y/%m/%d")
@@ -112,6 +121,8 @@ def show_robot_status():
                         robot_battery=battery,
                         robot_speed=speed,
                         robot_in_row=in_row_stat,
+                        robot_temp_pc=pc_temp,
+                        robot_temp_enclosure=enclosure_temp,
                         )
     db.session.add(m)
     db.session.commit()
