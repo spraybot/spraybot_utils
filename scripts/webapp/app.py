@@ -89,6 +89,16 @@ def index():
     robot = db.session.query(RobotStat).first()
     return render_template("index.html", robot=robot)
 
+@app.route("/start_row_task/")
+def start_robot():
+    robot_client.setStartAutoFlag(True)
+    return '', 204
+
+@app.route("/stop_row_task/")
+def stop_robot():
+    robot_client.setStartAutoFlag(False)
+    return '', 204
+
 # @app.route("/show_status/", methods=['POST'])
 @app.route("/show_status/")
 def show_robot_status():

@@ -4,6 +4,7 @@ import rclpy
 from rclpy.node import Node
 from rclpy.qos import (
     qos_profile_sensor_data,
+    # api_req_qos_profile,
     QoSDurabilityPolicy,
     QoSHistoryPolicy,
     QoSProfile,
@@ -15,6 +16,7 @@ from sensor_msgs.msg import Joy
 from diagnostic_msgs.msg import DiagnosticArray
 from std_msgs.msg import Bool
 from sensor_msgs.msg import Temperature
+from geometry_msgs.msg import Twist
 import numpy as np
 
 
@@ -50,8 +52,15 @@ class RobotWebClient(Node):
             Temperature, '/temp_data_enclosure', self.sub_temp_enclosure_cb, qos_profile_sensor_data
         )
         
+        self.auto_start_flag = False 
+        # TODO: verify topic and qos profile
+        self.velocity_pub = self.create_publisher(
+        # /qwebapp/cmd_vel
+            Twist, '/qwebapp/cmd_vel', 10
+        )
+
         timer_period_ = 1.0
-        # self.timer_ = self.create_timer(timer_period_, self.timer_callback)
+        self.timer_ = self.create_timer(timer_period_, self.timer_callback)
 
         self.items = {
             'gps': {'latitude': 0,
@@ -121,8 +130,23 @@ class RobotWebClient(Node):
     def getTempEnclosure(self):
         return str(self.items['temperature_enclosure'])
 
+    def setStartAutoFlag(self, flag):
+        self.auto_start_flag = flag 
+
     def timer_callback(self):
-        print(self.items)
+        # print(self.items)
+        # publish auto_start_flag to robot
+        vel_msg = Twist()
+        vel_msg.linear.x = 0.0
+        vel_msg.linear.y = 0.0
+        vel_msg.linear.z = 0.0
+        vel_msg.angular.x = 0.0
+        vel_msg.angular.y = 0.0
+        vel_msg.angular.z = 0.0
+        self.velocity_pub.publish(vel_msg)
+        # print(vel_msg)
+        print(self.auto_start_flag)
+        print("published")
  
 def main(args=None):
     rclpy.init(args=args)
