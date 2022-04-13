@@ -92,11 +92,13 @@ def index():
 @app.route("/start_row_task/")
 def start_robot():
     robot_client.setStartAutoFlag(True)
+    print("Start")
     return '', 204
 
 @app.route("/stop_row_task/")
 def stop_robot():
     robot_client.setStartAutoFlag(False)
+    print("Stop")
     return '', 204
 
 # @app.route("/show_status/", methods=['POST'])
@@ -179,6 +181,5 @@ if __name__ == '__main__':
     spin_thread = Thread(target=web_server_spin, args=())
     spin_thread.start()
 
-    app.debug = True
     app.run(host='0.0.0.0', port=4998)
 
