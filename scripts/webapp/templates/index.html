@@ -200,11 +200,15 @@
           <div class="row mt-5 mb-md-4">
             <div class="col-12 col-lg-8 text-center text-lg-start">
               <h2 class=" ">Robot Location</h2>
+              <p>GPS Latitude:{{robot.robot_gps_lat}}, Longtitude:{{robot.robot_gps_lng}}</p>
             </div>
           </div>
-          <div class="row mx-auto mb-md-4" id="map-container-google">
-            <iframe width="600" height="450" style="border:0" loading="lazy" allowfullscreen src="https://maps.google.com/maps?q=40.44094166051885%2C%20-79.94621086024465&t=k&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0"
-              style="border:0" allowfullscreen></iframe>
+          <div class="row d-flex mx-auto mb-md-4" id="map-container-google">
+            <div class="col-12 mx-auto justify-content-around">
+              {% with map=googlemap_obj("another-map", robot.robot_gps_lat, robot.robot_gps_lng, markers=[(37.4419, -122.1419), (37.4300, -122.1400)]) %} {{map.html}}{{map.js}} {% endwith %}
+            </div>
+            <!-- <iframe width="600" height="450" style="border:0" loading="lazy" allowfullscreen src="https://maps.google.com/maps?q=273.44094166051885%2C%20-79.94621086024123&t=k&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0"
+              style="border:0" allowfullscreen></iframe> -->
           </div>
         </div>
       </div>

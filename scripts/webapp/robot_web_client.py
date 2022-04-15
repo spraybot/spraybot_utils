@@ -77,7 +77,7 @@ class RobotWebClient(Node):
         self.items['gps'] = {
             'latitude': msg.latitude,
             'longitude': msg.longitude,
-            'latitude': msg.altitude
+            'altitude': msg.altitude
         }
 
     def sub_odom_cb(self, msg):
@@ -110,8 +110,11 @@ class RobotWebClient(Node):
     def getSpeed(self):
         return str(list(self.items['speed'].values()))
 
-    def getGPS(self):
-        return str(list(self.items['gps'].values()))
+    def getGPSLatitude(self):
+        return str(list(self.items['gps'].values())[0])
+
+    def getGPSLongtitude(self):
+        return str(list(self.items['gps'].values())[1])
 
     def getBattery(self):
         return str(self.items['battery'])
@@ -135,6 +138,8 @@ class RobotWebClient(Node):
         msg = Bool()
         msg.data = not self.auto_start_flag
         self.velocity_lock_pub.publish(msg)
+        print(self.getGPSLatitude())
+        print(self.getGPSLongtitude())
  
 def main(args=None):
     rclpy.init(args=args)

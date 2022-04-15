@@ -1,5 +1,7 @@
 from asyncore import dispatcher
 from flask import Flask, render_template, request, redirect, url_for
+from sqlalchemy import Float
+from flask_googlemaps import GoogleMaps
 # from sqlalchemy import create_engine
 # from sqlalchemy.orm import sessionmaker
 # from database_setup import Base, RobotStat
@@ -18,6 +20,7 @@ app.secret_key = 'dev'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
+GoogleMaps(app, key="AIzaSyAONNKP6vf0imt4gZXxZcq_ev9lX4krnnw")
 
 bootstrap = Bootstrap5(app)
 db = SQLAlchemy(app)
@@ -40,7 +43,9 @@ class RobotStat(db.Model):
     robot_in_row = db.Column(db.String(50), nullable=False) # 0: robot in row, should spray; 1: outside of row, should not spray
     robot_temp_pc = db.Column(db.String(50), nullable=False) # 0: robot in row, should spray; 1: outside of row, should not spray
     robot_temp_enclosure = db.Column(db.String(50), nullable=False) # 0: robot in row, should spray; 1: outside of row, should not spray
-    # robot_location_x = Column(String(50), nullable=False) # robot gps location first coordinate 
+    robot_gps_lat = db.Column(db.Float, nullable=False) # 0: robot in row, should spray; 1: outside of row, should not spray
+    robot_gps_lng = db.Column(db.Float, nullable=False) # 0: robot in row, should spray; 1: outside of row, should not spray
+    # robot_location = db.Column(db.String(100), nullable=False) # robot gps location first coordinate 
     # robot_location_y = Column(String(50), nullable=False) # robot gps location second coordinate
     # robot_task_stat = Column(Integer, nullable=False) # 0 no task, 1 active task, 2 pending task, 3 paused task
     # robot_task_name = Column(String(50), nullable=False) # name of the task dispatched to the robot
@@ -58,6 +63,8 @@ class RobotStat(db.Model):
             'robot_in_row': self.robot_in_row,
             'robot_temp_pc': self.robot_temp_pc,
             'robot_temp_enclosure': self.robot_temp_enclosure,
+            'robot_gps_lat': self.robot_gps_lat,
+            'robot_gps_lng': self.robot_gps_lng,
             # 'robot_location': self.robot_location,
             # 'robot_log_time': self.robot_log_time,
         }
@@ -77,6 +84,9 @@ def before_first_request_func():
                     robot_in_row="xxxx",
                     robot_temp_pc="xxxx",
                     robot_temp_enclosure="xxxx",
+                    robot_gps_lat = 0.0,
+                    robot_gps_lng = 0.0,
+                    # robot_location = "xxx"
                     )
     db.session.add(m)
     db.session.commit()
@@ -106,7 +116,8 @@ def stop_robot():
 def show_robot_status():
 
     # get data from robot client 
-    gps = robot_client.getGPS()
+    lat = robot_client.getGPSLatitude()
+    lng = robot_client.getGPSLongtitude()
     speed = robot_client.getSpeed()
     battery = robot_client.getBattery()
     in_row_stat = robot_client.getInRowStat()
@@ -119,11 +130,13 @@ def show_robot_status():
 
     pc_temp = robot_client.getTempPC()
     enclosure_temp = robot_client.getTempEnclosure()
-
+    
 
     now = datetime.now()
     dt_string = now.strftime("%H:%M:%S EST %Y/%m/%d")
     
+    # map_str = "googlemap(\"my_awesome_map\", zoom=16, lat=40.444181608717756, lng=-79.94885598970667, markers=[(40.444181608717756, -79.94885598970667),], style=\"height:800px;width:1200px;margin:0;\")"
+
     # create an entry in db 
     m = RobotStat(robot_stat_id="husky", 
                         # robot_stat_time='03:24 EST, 04/01/2022', 
@@ -135,6 +148,9 @@ def show_robot_status():
                         robot_in_row=in_row_stat,
                         robot_temp_pc=pc_temp,
                         robot_temp_enclosure=enclosure_temp,
+                        robot_gps_lat = lat,
+                        robot_gps_lng = lng,
+                        # robot_location = map_str
                         )
     db.session.add(m)
     db.session.commit()
