@@ -54,7 +54,7 @@ class RobotWebClient(Node):
         self.auto_start_flag = True 
         # TODO: verify topic and qos profile
         self.velocity_lock_pub = self.create_publisher(
-            Bool, '/webapp/cmd_vel_lock', 10
+            Bool, '/webapp/e_stop', 10
         )
 
         timer_period_ = 0.25
