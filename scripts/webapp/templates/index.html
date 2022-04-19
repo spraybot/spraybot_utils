@@ -1,236 +1,228 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <meta charset="UTF-8">
-    <title>Bootstrap 5 generator example page</title>
+<head>
+  <meta charset="UTF-8">
+  <title>Bootstrap 5 generator example page</title>
 
-    <meta charset="utf-8">
-    <meta name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
-    <link rel="stylesheet"
-      href=" https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css ">
-    <link rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
-    <!-- Plugins -->
-  </head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href=" https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css ">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+  <!-- Plugins -->
+</head>
 
-  <body>
+<body>
 
-    <nav class="navbar navbar-light bg-white  navbar-expand-md">
-      <div class="container">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-          data-bs-target="#navbarNav0" aria-controls="navbarNav0"
-          aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav0">
-          <ul class="navbar-nav me-auto ms-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span
-                  class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About </a>
-            </li>
-          </ul>
+  <nav class="navbar navbar-light bg-white  navbar-expand-md">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav0"
+        aria-controls="navbarNav0" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav0">
+        <ul class="navbar-nav me-auto ms-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="pt-5 pb-5 bg-light">
+    <div class="container">
+      <div class="row mb-md-4">
+        <div class="col-12 col-lg-8 text-center text-lg-start">
+          <h2 class=" ">Robot Control</h2>
         </div>
       </div>
-    </nav>
+      <div class="row justify-content-around">
+        <div class="mx-auto col-md-4 text-center">
+          <a href="/start_row_task" / class="btn btn-primary active" role="button" aria-pressed="true">Start</a>
+          <!-- <button type="button" class="btn btn-primary">Start</button> -->
+        </div>
 
-    <section class="pt-5 pb-5 bg-light">
-      <div class="container">
-        <div class="row mb-md-4">
+        <div class="mx-auto col-md-4 text-center">
+          <a href="/stop_row_task" / class="btn btn-danger active" role="button" aria-pressed="true">Stop</a>
+          <!-- <button type="button" class="btn btn-danger">Stop</button> -->
+        </div>
+        <div class="mx-auto col-md-4 text-center">
+          <a href="/show_status" / class="btn btn-secondary active" role="button" aria-pressed="true">Show Robot
+            Status</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row mt-5 mb-md-4">
+        <div class="col-12 col-lg-8 text-center text-lg-start">
+          <h2 class=" ">Robot Status</h2>
+          <p class="lead">
+            Updated at {{robot.robot_stat_time}}.
+          </p>
+        </div>
+      </div>
+      <div class="row d-flex mb-5">
+        <div class="col-10 mx-auto col-sm-4 col-md-4 col-lg-4 col-xl-4">
+          <div class="my-3 card card-body shadow p-4 ">
+            <div class="row align-items-center d-flex text-md-center text-lg-start">
+              <div class="col-12 col-sm-3 col-md-3 text-center px-0">
+                <div class="icon-wrap text-primary my-3">
+                  <i
+                    class="icon p-4 border-primary bg-light text-primary md-font-size rounded-circle fa fa-tint fa-lg"></i>
+                </div>
+              </div>
+              <div class="col-12 col-md-9 mt-3 mt-lg-0">
+                <h4 class="">
+                  Control Mode
+                </h4>
+                <p class=" mb-0">
+                  {{robot.robot_ctrl_mode}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-10 mx-auto col-sm-4 col-md-4 col-lg-4 col-xl-4">
+          <div class="my-3 card card-body shadow p-4 ">
+            <div class="row align-items-center d-flex text-md-center text-lg-start">
+              <div class="col-12 col-sm-3 col-md-3 text-center px-0">
+                <div class="icon-wrap text-primary my-3">
+                  <i
+                    class="icon p-4 border-primary bg-light text-primary md-font-size rounded-circle fa fa-tint fa-lg"></i>
+                </div>
+              </div>
+              <div class="col-12 col-md-9 mt-3 mt-lg-0">
+                <h4 class="">
+                  Battery Level
+                </h4>
+                <p class=" mb-0">
+                  {{robot.robot_battery}}%
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-10 mx-auto col-sm-4 col-md-4 col-lg-4 col-xl-4">
+          <div class="my-3 card card-body shadow p-4">
+            <div class="row align-items-center text-md-center text-lg-start">
+              <div class="col-12 col-sm-3 col-md-3 text-center px-0">
+                <div class="icon-wrap text-primary my-3">
+                  <i
+                    class="icon p-4 border-primary bg-light text-primary md-font-size rounded-circle fa fa-lock fa-lg"></i>
+                </div>
+              </div>
+              <div class="col-12 col-md-9 mt-3 mt-lg-0">
+                <h4 class="">
+                  Speed
+                </h4>
+                <p class="  mb-0">
+                  {{robot.robot_speed}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-10 mx-auto col-sm-4 col-md-4 col-lg-4 col-xl-4">
+          <div class="my-3 card card-body shadow p-4">
+            <div class="row align-items-center text-md-center text-lg-start">
+              <div class="col-12 col-sm-3 col-md-3 text-center px-0">
+                <div class="icon-wrap text-primary my-3">
+                  <i
+                    class="icon p-4 border-primary bg-light text-primary md-font-size rounded-circle fa fa-mobile fa-lg"></i>
+                </div>
+              </div>
+              <div class="col-12 col-md-9 mt-3 mt-lg-0">
+                <h4 class="">
+                  Robot in Row
+                </h4>
+                <p class="  sm-font-size text-dark-gray mb-0">
+                  {{robot.robot_in_row}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-10 mx-auto col-sm-4 col-md-4 col-lg-4 col-xl-4">
+          <div class="my-3 card card-body shadow p-4">
+            <div class="row align-items-center text-md-center text-lg-start">
+              <div class="col-12 col-sm-3 col-md-3 text-center px-0">
+                <div class="icon-wrap text-primary my-3">
+                  <i
+                    class="icon p-4 border-primary bg-light text-primary md-font-size rounded-circle fa fa-lock fa-lg"></i>
+                </div>
+              </div>
+              <div class="col-12 col-md-9 mt-3 mt-lg-0">
+                <h4 class="">
+                  Motor Current Draw
+                </h4>
+                <p class="  mb-0">
+                  {{robot.robot_temp_pc}} Amps
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-10 mx-auto col-sm-4 col-md-4 col-lg-4 col-xl-4">
+          <!-- <div class="col-10 mx-auto col-sm-6 col-md-6 col-lg-6 col-xl-3"> -->
+          <div class="my-3 card card-body shadow p-4">
+            <div class="row align-items-center text-md-center text-lg-start">
+              <div class="col-12 col-sm-3 col-md-3 text-center px-0">
+                <div class="icon-wrap text-primary my-3">
+                  <i
+                    class="icon p-4 border-primary bg-light text-primary md-font-size rounded-circle fa fa-lock fa-lg"></i>
+                </div>
+              </div>
+              <div class="col-12 col-md-9 mt-3 mt-lg-0">
+                <h4 class="">
+                  Robot Enclosure Temperature
+                </h4>
+                <p class="  mb-0">
+                  {{robot.robot_temp_enclosure}} Celsius
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="row mt-5 mb-md-4">
           <div class="col-12 col-lg-8 text-center text-lg-start">
-            <h2 class=" ">Robot Control</h2>
+            <h2 class=" ">Robot Location</h2>
+            <p>GPS Latitude:{{robot.robot_gps_lat}}, Longtitude:{{robot.robot_gps_lng}}</p>
           </div>
         </div>
-        <div class="row justify-content-around">
-          <div class="mx-auto col-md-4 text-center">
-            <a href="/start_row_task"/ class="btn btn-primary active" role="button" aria-pressed="true">Start</a>
-            <!-- <button type="button" class="btn btn-primary">Start</button> -->
+        <div class="row d-flex mx-auto mb-md-4" id="map-container-google">
+          <div class="col-12 mx-auto justify-content-around">
+            {% with map=googlemap_obj("another-map", robot.robot_gps_lat, robot.robot_gps_lng, markers=[(37.4419,
+            -122.1419), (37.4300, -122.1400)]) %} {{map.html}}{{map.js}} {% endwith %}
           </div>
-
-          <div class="mx-auto col-md-4 text-center">
-            <a href="/stop_row_task"/ class="btn btn-danger active" role="button" aria-pressed="true">Stop</a>
-            <!-- <button type="button" class="btn btn-danger">Stop</button> -->
-          </div>
-          <div class="mx-auto col-md-4 text-center">
-            <a href="/show_status"/ class="btn btn-secondary active" role="button" aria-pressed="true">Show Robot Status</a>
-          </div>
-        </div>
+        </div> -->
       </div>
-
+    </div>
+  </section>
+  <section class="">
+    <footer class="pt-4 pb-4 ">
       <div class="container">
-        <div class="row mt-5 mb-md-4">
-          <div class="col-12 col-lg-8 text-center text-lg-start">
-            <h2 class=" ">Robot Status</h2>
-            <p class="lead">
-              Updated at {{robot.robot_stat_time}}.
-            </p>
-          </div>
-        </div>
-        <div class="row d-flex mb-5">
-          <div class="col-10 mx-auto col-sm-4 col-md-4 col-lg-4 col-xl-4">
-            <div class="my-3 card card-body shadow p-4 ">
-              <div
-                class="row align-items-center d-flex text-md-center text-lg-start">
-                <div class="col-12 col-sm-3 col-md-3 text-center px-0">
-                  <div class="icon-wrap text-primary my-3">
-                    <i
-                      class="icon p-4 border-primary bg-light text-primary md-font-size rounded-circle fa fa-tint fa-lg"></i>
-                  </div>
-                </div>
-                <div class="col-12 col-md-9 mt-3 mt-lg-0">
-                  <h4 class="">
-                    Control Mode
-                  </h4>
-                  <p class=" mb-0">
-                    {{robot.robot_ctrl_mode}}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-10 mx-auto col-sm-4 col-md-4 col-lg-4 col-xl-4">
-            <div class="my-3 card card-body shadow p-4 ">
-              <div
-                class="row align-items-center d-flex text-md-center text-lg-start">
-                <div class="col-12 col-sm-3 col-md-3 text-center px-0">
-                  <div class="icon-wrap text-primary my-3">
-                    <i
-                      class="icon p-4 border-primary bg-light text-primary md-font-size rounded-circle fa fa-tint fa-lg"></i>
-                  </div>
-                </div>
-                <div class="col-12 col-md-9 mt-3 mt-lg-0">
-                  <h4 class="">
-                    Battery Level 
-                  </h4>
-                  <p class=" mb-0">
-                    {{robot.robot_battery}}%
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-10 mx-auto col-sm-4 col-md-4 col-lg-4 col-xl-4">
-            <div class="my-3 card card-body shadow p-4">
-              <div class="row align-items-center text-md-center text-lg-start">
-                <div class="col-12 col-sm-3 col-md-3 text-center px-0">
-                  <div class="icon-wrap text-primary my-3">
-                    <i
-                      class="icon p-4 border-primary bg-light text-primary md-font-size rounded-circle fa fa-lock fa-lg"></i>
-                  </div>
-                </div>
-                <div class="col-12 col-md-9 mt-3 mt-lg-0">
-                  <h4 class="">
-                    Speed
-                  </h4>
-                  <p class="  mb-0">
-                    {{robot.robot_speed}}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-10 mx-auto col-sm-4 col-md-4 col-lg-4 col-xl-4">
-            <div class="my-3 card card-body shadow p-4">
-              <div class="row align-items-center text-md-center text-lg-start">
-                <div class="col-12 col-sm-3 col-md-3 text-center px-0">
-                  <div class="icon-wrap text-primary my-3">
-                    <i
-                      class="icon p-4 border-primary bg-light text-primary md-font-size rounded-circle fa fa-mobile fa-lg"></i>
-                  </div>
-                </div>
-                <div class="col-12 col-md-9 mt-3 mt-lg-0">
-                  <h4 class="">
-                    Robot in Row
-                  </h4>
-                  <p class="  sm-font-size text-dark-gray mb-0">
-                    {{robot.robot_in_row}} 
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-10 mx-auto col-sm-4 col-md-4 col-lg-4 col-xl-4">
-            <div class="my-3 card card-body shadow p-4">
-              <div class="row align-items-center text-md-center text-lg-start">
-                <div class="col-12 col-sm-3 col-md-3 text-center px-0">
-                  <div class="icon-wrap text-primary my-3">
-                    <i
-                      class="icon p-4 border-primary bg-light text-primary md-font-size rounded-circle fa fa-lock fa-lg"></i>
-                  </div>
-                </div>
-                <div class="col-12 col-md-9 mt-3 mt-lg-0">
-                  <h4 class="">
-                    Robot PC Temperature
-                  </h4>
-                  <p class="  mb-0">
-                    {{robot.robot_temp_pc}}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-10 mx-auto col-sm-4 col-md-4 col-lg-4 col-xl-4">
-            <!-- <div class="col-10 mx-auto col-sm-6 col-md-6 col-lg-6 col-xl-3"> -->
-            <div class="my-3 card card-body shadow p-4">
-              <div class="row align-items-center text-md-center text-lg-start">
-                <div class="col-12 col-sm-3 col-md-3 text-center px-0">
-                  <div class="icon-wrap text-primary my-3">
-                    <i
-                      class="icon p-4 border-primary bg-light text-primary md-font-size rounded-circle fa fa-lock fa-lg"></i>
-                  </div>
-                </div>
-                <div class="col-12 col-md-9 mt-3 mt-lg-0">
-                  <h4 class="">
-                    Robot Enclosure Temperature
-                  </h4>
-                  <p class="  mb-0">
-                    {{robot.robot_temp_enclosure}}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row mt-5 mb-md-4">
-            <div class="col-12 col-lg-8 text-center text-lg-start">
-              <h2 class=" ">Robot Location</h2>
-              <p>GPS Latitude:{{robot.robot_gps_lat}}, Longtitude:{{robot.robot_gps_lng}}</p>
-            </div>
-          </div>
-          <div class="row d-flex mx-auto mb-md-4" id="map-container-google">
-            <div class="col-12 mx-auto justify-content-around">
-              {% with map=googlemap_obj("another-map", robot.robot_gps_lat, robot.robot_gps_lng, markers=[(37.4419, -122.1419), (37.4300, -122.1400)]) %} {{map.html}}{{map.js}} {% endwith %}
-            </div>
-            <!-- <iframe width="600" height="450" style="border:0" loading="lazy" allowfullscreen src="https://maps.google.com/maps?q=273.44094166051885%2C%20-79.94621086024123&t=k&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0"
-              style="border:0" allowfullscreen></iframe> -->
+        <div class="row text-center">
+          <div class="col">
+            <p>© 2022 Squirtle Squad. All Rights Reserved</p>
           </div>
         </div>
       </div>
-    </section>
-    <section class="">
-      <footer class="pt-4 pb-4 ">
-        <div class="container">
-          <div class="row text-center">
-            <div class="col">
-              <p>© 2022 Squirtle Squad. All Rights Reserved</p>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </section>
+    </footer>
+  </section>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-      crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
 
 
-  </body>
+</body>
 
 </html>

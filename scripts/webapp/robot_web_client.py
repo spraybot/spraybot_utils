@@ -16,6 +16,7 @@ from sensor_msgs.msg import Joy
 from diagnostic_msgs.msg import DiagnosticArray
 from std_msgs.msg import Bool
 from sensor_msgs.msg import Temperature
+from husky_msgs.msg import HuskyStatus
 import numpy as np
 
 
@@ -44,7 +45,7 @@ class RobotWebClient(Node):
         )
 
         self.sub_temp_pc_ = self.create_subscription(
-            Temperature, '/temp_data_pc', self.sub_temp_pc_cb, qos_profile_sensor_data
+            HuskyStatus, '/status', self.sub_temp_pc_cb, qos_profile_sensor_data
         )
 
         self.sub_temp_enclosure_ = self.create_subscription(
@@ -89,7 +90,7 @@ class RobotWebClient(Node):
     def sub_diag_cb(self, msg):
         for vals in msg.status[0].values:
             if (vals.key == 'Battery Voltage'):
-                batt_percentage = ( (float(vals.value) - 20) / (28.8 - 20) ) * (100 - 0) + 6
+                batt_percentage = ( (float(vals.value) - 20) / (28.8 - 20) ) * (20 - 0) + 6
                 self.items['battery'] = batt_percentage
 
     def sub_in_row_status_cb(self,msg):
@@ -102,7 +103,7 @@ class RobotWebClient(Node):
             self.items['autonomous_mode'] = True
 
     def sub_temp_pc_cb(self, msg):
-        self.items['temperature_pc'] = msg.temperature
+        self.items['temperature_pc'] = msg.left_driver_current + msg.right_driver_current
 
     def sub_temp_enclosure_cb(self, msg):
         self.items['temperature_enclosure'] = msg.temperature
@@ -138,8 +139,8 @@ class RobotWebClient(Node):
         msg = Bool()
         msg.data = not self.auto_start_flag
         self.velocity_lock_pub.publish(msg)
-        print(self.getGPSLatitude())
-        print(self.getGPSLongtitude())
+        # print(self.getGPSLatitude())
+        # print(self.getGPSLongtitude())
  
 def main(args=None):
     rclpy.init(args=args)
